@@ -48,18 +48,28 @@ public class Method1Manipulation {
         } finally {
             connection.disconnect(); //disconnects from server, and leaves you with output
         }
-        
-        
-        
+
+
+
         String test = "userId" ;
         String responseContentString = responseContent.toString();
+        String responseContentString2 = responseContentString.toString();
         int i = 0;
         String printPiece = responseContentString.substring((responseContentString.indexOf(test)), (responseContentString.indexOf(test) + 7));
+        String printPiece2 = responseContentString2.substring((responseContentString2.indexOf(test)), (responseContentString2.indexOf(test) + 7));
+
+
         while (responseContentString.contains(test)) {
-            System.out.print("\n" + printPiece);
            int firstO = responseContentString.indexOf(test);
            responseContentString = responseContentString.substring(firstO + test.length());
-            i++;
+           i++;
+        }
+        System.out.println(i + " recipes were found with that ingredient. Here they are:");
+
+        while (responseContentString2.contains(test)) {
+            System.out.print("\n" + printPiece2);
+            int firstO = responseContentString2.indexOf(test);
+            responseContentString2 = responseContentString2.substring(firstO + test.length());
         }
     }
 }
