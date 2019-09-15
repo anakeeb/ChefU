@@ -1,0 +1,43 @@
+package com.example.chefyou;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class IngredientsGUI extends AppCompatActivity {
+
+    EditText ingredient1;
+    EditText ingredient2;
+    EditText ingredient3;
+    Button search;
+
+    @Override
+
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ingredients_gui);
+
+        ingredient1 = findViewById(R.id.firstIngredientEditText);
+        ingredient2 = findViewById(R.id.secondIngredienteditText);
+        ingredient3 = findViewById(R.id.thirdIngredientEditText);
+        search = findViewById(R.id.searchBtn);
+
+        search.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v){
+                openRecipesGUI();
+            }
+        });
+    }
+    public void openRecipesGUI() {
+
+        Intent intent = new Intent(this, RecipesGUI.class);
+        startActivity(intent);
+    }
+}
