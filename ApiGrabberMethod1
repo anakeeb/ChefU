@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.*;
 import java.io.*;
 import java.net.*;
 
@@ -50,26 +51,29 @@ public class Method1Manipulation {
         }
 
 
-
-        String test = "userId" ;
+        Scanner in = new Scanner(System.in);
+        System.out.print("Enter the ingredient you have. ");
+        String test = in.next();
         String responseContentString = responseContent.toString();
         String responseContentString2 = responseContentString.toString();
         int i = 0;
         String printPiece = responseContentString.substring((responseContentString.indexOf(test)), (responseContentString.indexOf(test) + 7));
-        String printPiece2 = responseContentString2.substring((responseContentString2.indexOf(test)), (responseContentString2.indexOf(test) + 7));
+        String printPiece2;
 
-
-        while (responseContentString.contains(test)) {
+        while (responseContentString.contains(test )) {
            int firstO = responseContentString.indexOf(test);
            responseContentString = responseContentString.substring(firstO + test.length());
            i++;
         }
-        System.out.println(i + " recipes were found with that ingredient. Here they are:");
+        System.out.println(i + " recipes were found with that ingredient. Here they are: ");
 
         while (responseContentString2.contains(test)) {
+            printPiece2 = responseContentString2.substring((responseContentString2.indexOf(test)), (responseContentString2.indexOf(test) + 7));
             System.out.print("\n" + printPiece2);
             int firstO = responseContentString2.indexOf(test);
             responseContentString2 = responseContentString2.substring(firstO + test.length());
         }
+
+
     }
 }
