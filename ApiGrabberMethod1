@@ -48,10 +48,18 @@ public class Method1Manipulation {
         } finally {
             connection.disconnect(); //disconnects from server, and leaves you with output
         }
-        String test = "natus" ;
+        
+        
+        
+        String test = "userId" ;
         String responseContentString = responseContent.toString();
-        if (responseContentString.contains(test)) {
-            System.out.print(responseContentString.substring((responseContentString.indexOf(test)), (responseContentString.indexOf(test) + 25)));
+        int i = 0;
+        String printPiece = responseContentString.substring((responseContentString.indexOf(test)), (responseContentString.indexOf(test) + 7));
+        while (responseContentString.contains(test)) {
+            System.out.print("\n" + printPiece);
+           int firstO = responseContentString.indexOf(test);
+           responseContentString = responseContentString.substring(firstO + test.length());
+            i++;
         }
     }
 }
