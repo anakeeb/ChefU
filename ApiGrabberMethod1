@@ -27,6 +27,7 @@ public class Method1 {
                 reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
                 while((line = reader.readLine()) != null) {
                     responseContent.append(line);
+                    responseContent.append("\n");
                 }
                 reader.close();
             } else {
