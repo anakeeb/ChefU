@@ -1,0 +1,116 @@
+package com.example.chefyu;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import java.util.*;
+import java.io.*;
+import java.net.*;
+
+public class Work extends AppCompatActivity {
+    private static HttpURLConnection connection;
+    EditText firstIngredient;
+    EditText secondIngredient;
+    EditText thirdIngredient;
+    Button runAPI;
+    String firstIng;
+    String secondIng;
+    String thirdIng;
+    TextView amountOfRecipes;
+    TextView recipeList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_work);
+        amountOfRecipes = findViewById(R.id.amountOfRecipesTextView);
+        recipeList = findViewById(R.id.recipeListTextView);
+        firstIngredient = findViewById(R.id.firstIngredientEditText);
+        firstIng = firstIngredient.toString();
+        secondIngredient = findViewById(R.id.secondIngredientEditText);
+        secondIng = secondIngredient.toString();
+        thirdIngredient = findViewById(R.id.thirdIngredientEditText);
+        thirdIng = thirdIngredient.toString();
+        runAPI = findViewById(R.id.runBtn);
+        runAPI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BufferedReader reader;
+                String line;
+                StringBuffer responseContent = new StringBuffer();
+                try {
+                    URL url = new URL("https://jsonplaceholder.typicode.com/albums");  //website api
+                    connection = (HttpURLConnection) url.openConnection();
+
+                    //request setup
+                    connection.setRequestMethod("GET");
+                    connection.setConnectTimeout(5000);
+                    connection.setReadTimeout(5000);
+
+                    int status = connection.getResponseCode();
+                    //System.out.println(status);
+
+                    if (status > 299) {   //tests for erros and outputs error of there is one
+                        reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+                        while ((line = reader.readLine()) != null) {
+                            responseContent.append(line);
+                        }
+                        reader.close();
+                    } else {
+                        reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                        while ((line = reader.readLine()) != null) {
+                            responseContent.append(line);
+                            responseContent.append("\n");
+                        }
+                        reader.close();
+                    }
+
+                    //System.out.println(responseContent.toString());
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                } finally {
+                    connection.disconnect(); //disconnects from server, and leaves you with output
+                }
+
+
+                Scanner s = new Scanner(System.in);
+                String responseContentString = responseContent.toString();
+                String responseContentString2 = responseContentString.toString();
+                int i = 0;
+                String printPiece = responseContentString.substring((responseContentString.indexOf(firstIng)),
+                        (responseContentString.indexOf(firstIng) + 7));
+                String printPieceTwo;
+
+               
+
+                while (responseContentString.contains(firstIng)) {
+                    int first0 = responseContentString.indexOf(firstIng);
+                    responseContentString = responseContentString.substring(first0 + firstIng.length());
+                    i++;
+                }
+                amountOfRecipes.setText(i);
+
+
+                while (responseContentString2.contains(firstIng)) {
+                    printPieceTwo = responseContentString2.substring((responseContentString2.indexOf(firstIng)),
+                            (responseContentString2.indexOf(firstIng) + 7));
+                    recipeList.setText("\n " + printPieceTwo);
+                    int first0 = responseContentString2.indexOf(firstIng);
+                    responseContentString2 = responseContentString2.substring(first0 + firstIng.length());
+                }
+
+
+            }
+        });
+    }
+}
