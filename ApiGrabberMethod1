@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 
 //Method one java.net.http url Connection
-public class Method1 {
+public class Method1Manipulation {
     private static HttpURLConnection connection;
     public static void main(String[] args) {
 
@@ -27,18 +27,18 @@ public class Method1 {
                 reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
                 while((line = reader.readLine()) != null) {
                     responseContent.append(line);
-                    responseContent.append("\n");
                 }
                 reader.close();
             } else {
                 reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 while((line = reader.readLine()) != null) {
                     responseContent.append(line);
+                    responseContent.append("\n");
                 }
                 reader.close();
             }
 
-            System.out.println(responseContent.toString());
+            //System.out.println(responseContent.toString());
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -47,6 +47,10 @@ public class Method1 {
 
         } finally {
             connection.disconnect(); //disconnects from server, and leaves you with output
+        }
+        String test = "natus" ;
+        if (responseContent.toString().contains(test)) {
+            System.out.print("ya did it boi");
         }
     }
 }
